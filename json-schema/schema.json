@@ -1,0 +1,230 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://stac-extensions.github.io/umbra/v1.0.0/schema.json#",
+  "title": "Umbra STAC Extension",
+  "description": "STAC Extension for Umbra STAC Items .",
+  "oneOf": [
+    {
+      "$comment": "This is the schema for STAC Items.",
+      "allOf": [
+        {
+          "$ref": "#/definitions/stac_extensions"
+        },
+        {
+          "type": "object",
+          "required": [
+            "type",
+            "properties",
+            "assets"
+          ],
+          "properties": {
+            "type": {
+              "const": "Feature"
+            },
+            "properties": {
+              "allOf": [
+                {
+                  "$comment": "Require fields here for Item Properties.",
+                  "required": [
+                    "umbra:task_id"
+                  ]
+                },
+                {
+                  "$ref": "#/definitions/fields"
+                }
+              ]
+            },
+            "assets": {
+              "$comment": "This validates the fields in Item Assets, but does not require them.",
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/fields"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "$comment": "This is the schema for STAC Collections.",
+      "type": "object",
+      "allOf": [
+        {
+          "required": [
+            "type"
+          ],
+          "properties": {
+            "type": {
+              "const": "Collection"
+            }
+          }
+        },
+        {
+          "$ref": "#/definitions/stac_extensions"
+        }
+      ],
+      "anyOf": [
+        {
+          "$comment": "This is the schema for the top-level fields in a Collection. Remove this if this extension does not define top-level fields for Collections.",
+          "allOf": [
+            {
+              "$comment": "Require fields here for Collections (top-level).",
+              "required": [
+                "umbra:task_id"
+              ]
+            },
+            {
+              "$ref": "#/definitions/fields"
+            }
+          ]
+        },
+        {
+          "$comment": "This validates the fields in Collection Assets, but does not require them.",
+          "required": [
+            "assets"
+          ],
+          "properties": {
+            "assets": {
+              "type": "object",
+              "not": {
+                "additionalProperties": {
+                  "not": {
+                    "allOf": [
+                      {
+                        "$ref": "#/definitions/require_any_field"
+                      },
+                      {
+                        "$ref": "#/definitions/fields"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "$comment": "This is the schema for the fields in Item Asset Definitions. It doesn't require any fields.",
+          "required": [
+            "item_assets"
+          ],
+          "properties": {
+            "item_assets": {
+              "type": "object",
+              "not": {
+                "additionalProperties": {
+                  "not": {
+                    "allOf": [
+                      {
+                        "$ref": "#/definitions/require_any_field"
+                      },
+                      {
+                        "$ref": "#/definitions/fields"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "$comment": "This is the schema for the fields in Summaries. By default, only checks the existence of the properties, but not the schema of the summaries.",
+          "required": [
+            "summaries"
+          ],
+          "properties": {
+            "summaries": {
+              "$ref": "#/definitions/require_any_field"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "definitions": {
+    "stac_extensions": {
+      "type": "object",
+      "required": [
+        "stac_extensions"
+      ],
+      "properties": {
+        "stac_extensions": {
+          "type": "array",
+          "contains": {
+            "const": "https://stac-extensions.github.io/umbra/v1.0.0/schema.json"
+          }
+        }
+      }
+    },
+    "require_any_field": {
+      "$comment": "Please list all fields here so that we can force the existence of one of them in other parts of the schemas.",
+      "anyOf": [
+        {"required": ["umbra:grazing_angle_degrees"]},
+        {"required": ["umbra:squint_angle_engineering_degrees"]},
+        {"required": ["umbra:squint_angle_exploitation_degrees"]},
+        {"required": ["umbra:umbra:squint_angle_degrees_off_broadside"]},
+        {"required": ["umbra:slant_range_meters"]},
+        {"required": ["umbra:target_azimuth_angle_degrees"]},
+        {"required": ["umbra:organization_id"]},
+        {"required": ["umbra:task_id"]},
+        {"required": ["umbra:collect_id"]}
+      ]
+    },
+    "fields": {
+      "$comment": "Add your new fields here. Don't require them here, do that above in the corresponding schema.",
+      "type": "object",
+      "properties": {
+        "umbra:grazing_angle_degrees": {
+          "type": "number",
+          "description": "The angle between the local vertical and the line of sight"
+        },
+        "umbra:collect_ids": {
+          "type": "array",
+          "description": "list of uuid collect ids corresponding to collects associated with this STAC item"
+        },
+        "umbra:organization_id": {
+          "type": "string",
+          "description": "Umbra Org Id code"
+        },
+        "umbra:squint_angle_engineering_degrees": {
+          "type": "number",
+          "minimum": -180,
+          "maximum": 180
+        },
+        "umbra:squint_angle_exploitation_degrees": {
+          "type": "number",
+          "minimum": -90,
+          "maximum": 90
+        },
+        "umbra:squint_angle_degrees_off_broadside": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 90
+        },
+        "umbra:slant_range_meters": {
+          "type": "number"
+        },
+        "umbra:target_azimuth_angle_degrees": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 360
+        },
+        "umbra:task_id": {
+          "type": "string",
+          "description": "Task uuid id"
+        },
+        "umbra:collect_id": {
+          "type": "string",
+          "description": "Collect uuid id"
+        }
+      },
+      "patternProperties": {
+        "^(?!umbra:)": {
+          "$comment": "Above, change `umbra` to the prefix of this extension"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
