@@ -175,48 +175,67 @@
       "$comment": "Add your new fields here. Don't require them here, do that above in the corresponding schema.",
       "type": "object",
       "properties": {
-        "umbra:grazing_angle_degrees": {
+        "umbra:best_resolution_azimuth_meters": {
           "type": "number",
-          "description": "The angle between the local vertical and the line of sight"
+          "description": "The best possible azimuth resolution achievable from the CPHD data product processing.",
+          "minimum": 0
+        },
+        "umbra:best_resolution_range_meters": {
+          "type": "number",
+          "description": "The best possible range resolution achievable from the CPHD data product processing.",
+          "minimum": 0
+        },
+        "umbra:collect_id": {
+          "type": "string",
+          "description": "The collect id if the task is composed of a single collect for the task."
         },
         "umbra:collect_ids": {
           "type": "array",
-          "description": "list of uuid collect ids corresponding to collects associated with this STAC item"
+          "description": "The collect ids if the task is composed of multiple collects for the task."
+        },
+        "umbra:grazing_angle_degrees": {
+          "type": "number",
+          "description": "The angle between the local vertical and the line of sight."
         },
         "umbra:organization_id": {
           "type": "string",
           "description": "Umbra Org Id code"
         },
-        "umbra:squint_angle_engineering_degrees": {
-          "type": "number",
-          "minimum": -180,
-          "maximum": 180
+        "umbra:platform_pair": {
+          "type": "string",
+          "description": "Transmitting platform name in the case of a Multistatic collect"
         },
-        "umbra:squint_angle_exploitation_degrees": {
+        "umbra:slant_range_meters": {
           "type": "number",
-          "minimum": -90,
-          "maximum": 90
+          "description": "The slant range is the straight line distance between the target location and the satellite in meters."
         },
         "umbra:squint_angle_degrees_off_broadside": {
           "type": "number",
           "minimum": 0,
-          "maximum": 90
+          "maximum": 90,
+          "description": "squint angle in degrees off broadside, where zero is directly broadside"
         },
-        "umbra:slant_range_meters": {
-          "type": "number"
+        "umbra:squint_angle_engineering_degrees": {
+          "type": "number",
+          "minimum": -180,
+          "maximum": 180,
+          "description": "squint angle engineering degrees. if negative on left side, if positive on right, 0 in direction of velocity."
+        },
+        "umbra:squint_angle_exploitation_degrees": {
+          "type": "number",
+          "minimum": -90,
+          "maximum": 90,
+          "description": "squint angle exploitation degrees. requires pairing with sat:observation_direction to know the meaning of the value. The least useful of the three squints."
         },
         "umbra:target_azimuth_angle_degrees": {
           "type": "number",
           "minimum": 0,
-          "maximum": 360
+          "maximum": 360,
+          "description": "The angle between the projected vector [the collection geometry of the particular opportunity] and a reference vector [north] on the reference plane is called the azimuth"
         },
         "umbra:task_id": {
           "type": "string",
           "description": "Task uuid id"
-        },
-        "umbra:collect_id": {
-          "type": "string",
-          "description": "Collect uuid id"
         }
       },
       "patternProperties": {
