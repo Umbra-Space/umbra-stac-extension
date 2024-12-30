@@ -15,7 +15,7 @@ the [`sar` extension](https://github.com/stac-extensions/sar), the [`view` exten
 
 - Examples:
   - [Item example](examples/item.json): Shows the basic usage of the extension in a STAC Item
-- [JSON Schema](json-schema/schema.json)
+- [JSON Schema](json-schema/v1.0.0/schema.json)
 - [Changelog](./CHANGELOG.md)
 
 ## Fields
