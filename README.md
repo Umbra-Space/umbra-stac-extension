@@ -1,7 +1,7 @@
 # Umbra Extension Specification
 
 - **Title:** Umbra
-- **Identifier:** <https://stac-extensions.github.io/umbra/v1.0.0/schema.json>
+- **Identifier:** <[https://umbra-space.github.io/umbra-stac-extension/json-schema/v1.0.0/schema.json](https://umbra-space.github.io/umbra-stac-extension/json-schema/v1.0.0/schema.json)>
 - **Field Name Prefix:** umbra
 - **Scope:** Item, Collection
 - **Extension [Maturity Classification](https://github.com/radiantearth/stac-spec/tree/master/extensions/README.md#extension-maturity):** Proposal
