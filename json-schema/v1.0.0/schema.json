@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://stac-extensions.github.io/umbra/v1.0.0/schema.json#",
+  "$id": "https://umbra-space.github.io/umbra-stac-extension/json-schema/v1.0.0/schema.json#",
   "title": "Umbra STAC Extension",
   "description": "STAC Extension for Umbra STAC Items .",
   "oneOf": [
@@ -152,7 +152,7 @@
         "stac_extensions": {
           "type": "array",
           "contains": {
-            "const": "https://stac-extensions.github.io/umbra/v1.0.0/schema.json"
+            "const": "https://umbra-space.github.io/umbra-stac-extension/json-schema/v1.0.0/schema.json"
           }
         }
       }
